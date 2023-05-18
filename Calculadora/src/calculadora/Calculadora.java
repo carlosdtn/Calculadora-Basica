@@ -60,12 +60,13 @@ public class Calculadora extends javax.swing.JFrame {
         botonInversa = new javax.swing.JButton();
         btnPotenciaCubica = new javax.swing.JButton();
         btnPorcentaje = new javax.swing.JButton();
+        btnPotenciaN = new javax.swing.JButton();
         etiquetaNumeros = new javax.swing.JLabel();
         etiquetaMuestra = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panel.setLayout(new java.awt.GridLayout(6, 4));
+        panel.setLayout(new java.awt.GridLayout(7, 4));
 
         botonC.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         botonC.setText("C");
@@ -292,6 +293,15 @@ public class Calculadora extends javax.swing.JFrame {
         });
         panel.add(btnPorcentaje);
 
+        btnPotenciaN.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnPotenciaN.setText("Xⁿ");
+        btnPotenciaN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPotenciaNActionPerformed(evt);
+            }
+        });
+        panel.add(btnPotenciaN);
+
         etiquetaNumeros.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         etiquetaNumeros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         etiquetaNumeros.setText("0");
@@ -440,56 +450,63 @@ public class Calculadora extends javax.swing.JFrame {
         double segundoNumero;
         if (operacion.equals("nula")) {
             etiquetaNumeros.setText(cadenaNumeros);
-        } else if (operacion.equals("sumar")) {
-            segundoNumero = Double.parseDouble(cadenaNumeros);
-            resultado = primerNumero + segundoNumero;;
-            etiquetaNumeros.setText(String.format("% .2f", resultado));
-            cadenaNumeros = String.valueOf(resultado);
-            operacion = "nula";
-        } else if (operacion.equals("restar")) {
-            segundoNumero = Double.parseDouble(cadenaNumeros);
-            resultado = primerNumero - segundoNumero;;
-            etiquetaNumeros.setText(String.format("% .2f", resultado));
-            cadenaNumeros = String.valueOf(resultado);
-            operacion = "nula";
-        } else if (operacion.equals("multiplicar")) {
-            segundoNumero = Double.parseDouble(cadenaNumeros);
-            resultado = primerNumero * segundoNumero;;
-            etiquetaNumeros.setText(String.format("% .2f", resultado));
-            cadenaNumeros = String.valueOf(resultado);
-            operacion = "nula";
-        } else if (operacion.equals("dividir")) {
-            segundoNumero = Double.parseDouble(cadenaNumeros);
-            if (segundoNumero == 0) {
-                etiquetaNumeros.setText("NoSeDividePor0");
-            } else {
-                resultado = primerNumero / segundoNumero;;
+        } else if(!cadenaNumeros.equals("")){
+            if (operacion.equals("sumar")) {
+                segundoNumero = Double.parseDouble(cadenaNumeros);
+                resultado = primerNumero + segundoNumero;;
+                etiquetaNumeros.setText(String.format("% .2f", resultado));
+                cadenaNumeros = String.valueOf(resultado);
+                operacion = "nula";
+            } else if (operacion.equals("restar")) {
+                segundoNumero = Double.parseDouble(cadenaNumeros);
+                resultado = primerNumero - segundoNumero;;
+                etiquetaNumeros.setText(String.format("% .2f", resultado));
+                cadenaNumeros = String.valueOf(resultado);
+                operacion = "nula";
+            } else if (operacion.equals("multiplicar")) {
+                segundoNumero = Double.parseDouble(cadenaNumeros);
+                resultado = primerNumero * segundoNumero;;
+                etiquetaNumeros.setText(String.format("% .2f", resultado));
+                cadenaNumeros = String.valueOf(resultado);
+                operacion = "nula";
+            } else if (operacion.equals("dividir")) {
+                segundoNumero = Double.parseDouble(cadenaNumeros);
+                if (segundoNumero == 0) {
+                    etiquetaNumeros.setText("NoSeDividePor0");
+                } else {
+                    resultado = primerNumero / segundoNumero;;
+                    etiquetaNumeros.setText(String.format("% .2f", resultado));
+                    cadenaNumeros = String.valueOf(resultado);
+                    operacion = "nula";
+                }
+            } //Se evaluar si la opreacion es el porncentaje
+            else if (operacion.equals("porcentaje")){
+                //Se obtiene el segundo numero
+               segundoNumero = Double.parseDouble(cadenaNumeros);
+               //Se evalua el caso si el segundo numero es 0 
+               if (segundoNumero == 0) {
+                    etiquetaNumeros.setText("NoSeSacaPorcentajeDe0");
+                } else {
+                   //En caso la operacion sea valida 
+                   // se saca el porcentaje de los numeros
+                    resultado = (primerNumero / 100) * segundoNumero;;
+                    //Se pita el resultado
+                    etiquetaNumeros.setText(String.format("% .2f", resultado));
+                    //Se guarda el resultado
+                    cadenaNumeros = String.valueOf(resultado);
+                    operacion = "nula";
+                }
+            } else if (operacion.equals("potencia")) {
+                segundoNumero = Double.parseDouble(cadenaNumeros);
+                resultado = Math.pow(primerNumero, segundoNumero);
                 etiquetaNumeros.setText(String.format("% .2f", resultado));
                 cadenaNumeros = String.valueOf(resultado);
                 operacion = "nula";
             }
-        } //Se evaluar si la opreacion es el porncentaje
-        else if (operacion.equals("porcentaje")){
-            //Se obtiene el segundo numero
-           segundoNumero = Double.parseDouble(cadenaNumeros);
-           //Se evalua el caso si el segundo numero es 0 
-           if (segundoNumero == 0) {
-                etiquetaNumeros.setText("NoSeSacaPorcentajeDe0");
-            } else {
-               //En caso la operacion sea valida 
-               // se saca el porcentaje de los numeros
-                resultado = (primerNumero / 100) * segundoNumero;;
-                //Se pita el resultado
-                etiquetaNumeros.setText(String.format("% .2f", resultado));
-                //Se guarda el resultado
-                cadenaNumeros = String.valueOf(resultado);
-                operacion = "nula";
-            }
-        }
-
-        etiquetaMuestra.setText("");
-        activado = true;
-        punto = false;
+            etiquetaMuestra.setText("");
+            activado = true;
+            punto = false;
+        }        
     }//GEN-LAST:event_botonIgualActionPerformed
 
     private void botonMultiplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMultiplicarActionPerformed
@@ -627,6 +644,17 @@ public class Calculadora extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPorcentajeActionPerformed
 
+    private void btnPotenciaNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPotenciaNActionPerformed
+        if (activado) {
+            primerNumero = Double.parseDouble(cadenaNumeros);
+            etiquetaMuestra.setText(cadenaNumeros + " ^ ");
+            cadenaNumeros = "";
+            operacion = "potencia";
+
+            activado = false;
+        }
+    }//GEN-LAST:event_btnPotenciaNActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -683,6 +711,7 @@ public class Calculadora extends javax.swing.JFrame {
     private javax.swing.JButton botonSumar;
     private javax.swing.JButton btnPorcentaje;
     private javax.swing.JButton btnPotenciaCubica;
+    private javax.swing.JButton btnPotenciaN;
     private javax.swing.JLabel etiquetaMuestra;
     private javax.swing.JLabel etiquetaNumeros;
     private javax.swing.JButton jButton28;
