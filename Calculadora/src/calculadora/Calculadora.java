@@ -5,6 +5,9 @@
  */
 package calculadora;
 
+import java.awt.Component;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -325,7 +328,7 @@ public class Calculadora extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(etiquetaMuestra, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addComponent(etiquetaMuestra, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(etiquetaNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -543,13 +546,42 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_botonDivisionActionPerformed
 
     private void botonRaizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRaizActionPerformed
-        primerNumero = Double.parseDouble(cadenaNumeros);
-        etiquetaMuestra.setText("sqrt(" + cadenaNumeros + ")");
-        resultado = Math.sqrt(primerNumero);
-        etiquetaNumeros.setText(String.format("%.2f", resultado));
-        cadenaNumeros = String.valueOf(resultado); //convertimos el valor a cadena
+        
+        try{
+            primerNumero = Double.parseDouble(cadenaNumeros);
+            etiquetaMuestra.setText("raizCuadrada(" + cadenaNumeros + ")");
+            
+
+            /*
+            if (primerNumero < 0) {
+                etiquetaNumeros.setText("Math error");
+                botonesHabilitados(panel, false);
+                //etiquetaNumeros.setEnabled(false);}
+                botonC.setEnabled(true);
+                return;
+            }
+            */
+            
+            resultado = Math.sqrt(primerNumero);
+            etiquetaNumeros.setText(String.format("%.2f", resultado));
+            cadenaNumeros = String.valueOf(resultado); //convertimos el valor a cadena
+        } catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+        } 
     }//GEN-LAST:event_botonRaizActionPerformed
 
+    private static void botonesHabilitados(JPanel panel, boolean estado) {
+        Component[] components;
+        components = panel.getComponents();
+
+        for (Component component : components) {
+            if (component instanceof JButton) {
+                JButton button = (JButton) component;
+                button.setEnabled(estado);
+            }
+        }
+    }
+    
     private void botonPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPuntoActionPerformed
         if (punto == true) {
             if (cadenaNumeros.equals("")) {
@@ -578,6 +610,7 @@ public class Calculadora extends javax.swing.JFrame {
         cadenaNumeros = "";
         activado = true;
         punto = true;
+       // botonesHabilitados(panel, true);
     }//GEN-LAST:event_botonCActionPerformed
 
     private void botonCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCEActionPerformed
