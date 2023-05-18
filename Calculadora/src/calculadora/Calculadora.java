@@ -551,16 +551,14 @@ public class Calculadora extends javax.swing.JFrame {
             primerNumero = Double.parseDouble(cadenaNumeros);
             etiquetaMuestra.setText("raizCuadrada(" + cadenaNumeros + ")");
             
-
-            /*
+            
             if (primerNumero < 0) {
                 etiquetaNumeros.setText("Math error");
                 botonesHabilitados(panel, false);
-                //etiquetaNumeros.setEnabled(false);}
+                
                 botonC.setEnabled(true);
                 return;
             }
-            */
             
             resultado = Math.sqrt(primerNumero);
             etiquetaNumeros.setText(String.format("%.2f", resultado));
@@ -610,7 +608,7 @@ public class Calculadora extends javax.swing.JFrame {
         cadenaNumeros = "";
         activado = true;
         punto = true;
-       // botonesHabilitados(panel, true);
+        botonesHabilitados(panel, true);
     }//GEN-LAST:event_botonCActionPerformed
 
     private void botonCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCEActionPerformed
