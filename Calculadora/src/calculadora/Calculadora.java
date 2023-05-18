@@ -574,15 +574,13 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_botonInversaActionPerformed
 
     private void btnPotenciaCubicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPotenciaCubicaActionPerformed
-        // TODO add your handling code here:
-        /*
-        * Potencia Cúbica de un número real
-        * Elevar al cubo un número es el producto de multiplicar ese número por sí mismo dos veces.
-        * Expresión matemática: x^3 = x * x * x
-        */
-        etiquetaMuestra.setText("Potencia cúbica(" + cadenaNumeros + ")");
-        primerNumero = Double.parseDouble(cadenaNumeros);
-        resultado = Math.pow(primerNumero, 3);
+        // modifica etiqueta en pantalla
+        etiquetaMuestra.setText("Potencia cúbica de (" + cadenaNumeros + ")");
+
+        // obtiene resultado
+        resultado = getPotenciaCubica(cadenaNumeros);
+
+        // imprime resultado en pantalla
         etiquetaNumeros.setText(String.format("%.2f", resultado));
         cadenaNumeros = String.valueOf(resultado);
     }//GEN-LAST:event_btnPotenciaCubicaActionPerformed
@@ -622,6 +620,11 @@ public class Calculadora extends javax.swing.JFrame {
                 new Calculadora().setVisible(true);
             }
         });
+    }
+
+    // obtener número al cubo
+    public double getPotenciaCubica(String entrada) {
+        return Math.pow(Double.parseDouble(entrada), 3);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
